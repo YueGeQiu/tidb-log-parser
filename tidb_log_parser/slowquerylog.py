@@ -33,15 +33,21 @@ class SlowQueryLog(TiDBLog):
     def __str__(self):
         text = '---\n'
         text += 'Timestamp: %s\n' % self.timestamp
-        text += 'Cost(s): %f\n' % self.cost_time
+        text += 'Cost (ms): %f\n' % self.cost_time
         text += 'SQL: %s' % self.sql
         return text
 
     @property
     def cost_time(self):
         try:
-            return float(self._cost_time[:-1])
+            if self._cost_time.endswith('ms'):
+                return float(self._cost_time[:-2])
+            elif self._cost_time.endswith('s'):
+                return float(self._cost_time[:-1]) * 1000
+            else:
+                raise ValueError
         except ValueError:
+            print("unknown time unit: %s" % self._cost_time)
             return -1
 
 
