@@ -26,7 +26,7 @@ class TiDBLog(object):
             raise TiDBLogError("Empty log text")
         log_text = str.strip(log_text)
         # attributes
-        self.date = None
+        self.timestamp = None
         self.source_file = None
         self.level = None
         self.log_msg = ''
@@ -45,7 +45,7 @@ class TiDBLog(object):
         date_time_source = m.group(1).split(' ')
         if len(date_time_source) != 3:
             raise InvalidTiDBLogError("Datetime format cannot match")
-        self.date = date_time_source[0] + ' ' + date_time_source[1]
+        self.timestamp = date_time_source[0] + ' ' + date_time_source[1]
         self.source_file = date_time_source[2]
         self.level = m.group(2)[1:-1]
         self.log_msg = m.group(3)
