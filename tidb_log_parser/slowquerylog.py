@@ -16,7 +16,7 @@ class SlowQueryLog(TiDBLog):
 
     def __init__(self, log_text):
         # slow query attributes
-        self.cost_time = None
+        self._cost_time = None
         self.sql = None
         super(SlowQueryLog, self).__init__(log_text)
 
@@ -27,5 +27,21 @@ class SlowQueryLog(TiDBLog):
         if not m:
             print(self.log_msg)
             raise SlowQueryFormatError('slow query log format not matched')
-        self.cost_time = m.group(1)
+        self._cost_time = m.group(1)
         self.sql = m.group(2)
+
+    def __str__(self):
+        text = '---\n'
+        text += 'Timestamp: %s\n' % self.timestamp
+        text += 'Cost(s): %f\n' % self.cost_time
+        text += 'SQL: %s' % self.sql
+        return text
+
+    @property
+    def cost_time(self):
+        try:
+            return float(self._cost_time[:-1])
+        except ValueError:
+            return -1
+
+
