@@ -4,7 +4,7 @@ import re
 
 # FIXME: find better way to make this configurable and flexible
 # ? is for non-greedy matching
-LOG_REGEX = r'(.*?)\:\s*(\[.*?\])\s*(.*)'
+LOG_REGEX = r'(.*?)\:\s+(\[.*?\])\s+(.*)'
 
 
 class TiDBLogError(Exception):
