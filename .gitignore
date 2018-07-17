@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+logs/
 
 # Distribution / packaging
 .Python
@@ -102,3 +103,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# macOS files
+.DS_Store
+
+# IntelliJ IDEs
+.idea/
+
